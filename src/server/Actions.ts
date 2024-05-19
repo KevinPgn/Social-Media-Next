@@ -93,3 +93,33 @@ model PostTag {
   @@id([postId, tagId])
 }
 */
+
+export const createPost = authenticatedAction(
+  z.object({
+    title: z.string(),
+    content: z.string(),
+    image: z.string().optional(),
+    tags: z.array(z.string())
+  }),
+  async({title, content, image, tags}, {userId}) => {
+    const post = await prisma.posts.create({
+      data: {
+        title,
+        content,
+        image,
+        authorId: userId,
+        tags: {
+          create: tags.map(tag => ({
+            tag: {
+              connectOrCreate: {
+                where: {name: tag},
+                create: {name: tag}
+              }
+            }
+          }))
+        }
+      }
+    })
+    return post
+  }
+)
