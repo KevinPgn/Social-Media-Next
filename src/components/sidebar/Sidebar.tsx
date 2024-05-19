@@ -11,9 +11,15 @@ export const Sidebar = async () => {
 
       <div className="flex justify-center flex-col items-center">
         <h2 className="text-center font-bold text-3xl mb-7">VIBE ZONE</h2>
-        <img src={session?.user?.image ?? ""} alt="image user" className="w-16 h-16 rounded-full" />
-        <span className="mb-2 mt-2">{session?.user?.name}</span>
-        <InfoUser />
+        {session ? (
+          <>
+          <img src={session?.user?.image ?? ""} alt="image user" className="w-16 h-16 rounded-full" />
+          <span className="mb-2 mt-2">{session?.user?.name}</span>
+          <InfoUser />
+        </>
+        ) : (
+          <span className="text-center">You need to be logged in to see this information</span>
+        )}
         <div className="w-full h-[1px] bg-slate-400 mt-10"></div>
       </div>
 
