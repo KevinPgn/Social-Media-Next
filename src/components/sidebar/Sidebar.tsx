@@ -6,7 +6,7 @@ import { Links } from "./Link"
 export const Sidebar = async () => {
   const session = await auth()
   
-  return <section className="w-[280px]">
+  return <section className="w-[400px]">
     <div className="w-full flex flex-col justify-between p-3 h-full">
 
       <div className="flex justify-center flex-col items-center">

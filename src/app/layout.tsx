@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Sidebar } from "@/components/sidebar/Sidebar";
 import { SessionProvider } from "next-auth/react";
+import { PubSidebar } from "@/components/pubsidebar/PubSidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <SessionProvider>
           <Sidebar />
           {children}
+          <PubSidebar />
         </SessionProvider>
         </body>
     </html>

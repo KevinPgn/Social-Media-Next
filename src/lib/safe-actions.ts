@@ -18,3 +18,9 @@ export const authenticatedAction = createSafeActionClient({
     }
   }
 })
+
+export const unauthenticatedAction = createSafeActionClient({
+  async middleware() {
+    return {}
+  }
+})
