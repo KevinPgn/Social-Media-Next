@@ -1,27 +1,6 @@
 "use client"
 import { Input } from "@/components/ui/input"
 import { createPost } from "@/server/Actions"
-/*
-model Posts {
-  id        String   @id @default(cuid())
-  title     String
-  content   String
-  image     String?
-
-  comments  Comment[]
-  likes     Like[]
-  saved     SavedPosts[]
-  tags      PostTag[]
-  
-  author    User     @relation(fields: [authorId], references: [id])
-  authorId  String
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-Sépare moi les tags avec les #
-*/
 
 export const CreatePost = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

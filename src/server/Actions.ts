@@ -133,6 +133,8 @@ export const getPosts = async () => {
           tag: true
         }
       },
+      author: true,
+      likes: true,
     }
   })
 
