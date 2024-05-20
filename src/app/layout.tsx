@@ -1,9 +1,11 @@
+import { BtnCreatePost } from "@/components/Button/BtnCreatePost";
+import { PubSidebar } from "@/components/pubsidebar/PubSidebar";
+import { SearchBar } from "@/components/Search/SearchBar";
+import { Sidebar } from "@/components/sidebar/Sidebar";
 import type { Metadata } from "next";
+import { SessionProvider } from "next-auth/react";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Sidebar } from "@/components/sidebar/Sidebar";
-import { SessionProvider } from "next-auth/react";
-import { PubSidebar } from "@/components/pubsidebar/PubSidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +24,15 @@ export default function RootLayout({
       <body className={"flex min-h-screen px-5 " + inter.className} data-theme='night'>
         <SessionProvider>
           <Sidebar />
-          {children}
+          <section className="flex p-3 w-full">
+            <div className="w-full">
+            <div className="flex items-center justify-around">
+              <SearchBar />
+              <BtnCreatePost />
+            </div>
+              {children}
+            </div>
+          </section>
           <PubSidebar />
         </SessionProvider>
         </body>
