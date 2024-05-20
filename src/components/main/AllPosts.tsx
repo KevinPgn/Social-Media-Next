@@ -1,7 +1,10 @@
+import { auth } from "@/lib/auth"
 import { BtnBookmark } from "../Button/BtnBookmark"
 import { BtnLike } from "../Button/BtnLike"
 
-export const AllPosts = ({posts}: any) => {
+export const AllPosts = async ({posts}: any) => {
+  const session = await auth()
+  const user = session?.user?.id
   return <section className="flex flex-col gap-5">
     {posts.map((post: any) => (
       <div key={post.id} className="w-full bg-slate-950 p-5 rounded-md">
@@ -23,8 +26,8 @@ export const AllPosts = ({posts}: any) => {
         </div>
 
         <div className="flex items-center justify-between mt-10">
-          <BtnLike />
-          <BtnBookmark />
+          <BtnLike numberLikes={post.likes} postid={post.id}/>
+          <BtnBookmark postid={post.id} userid={user} savedPost={post.saved}/>
         </div>
       </div>
     ))}

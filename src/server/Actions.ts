@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma"
 import {z} from "zod"
 import { authenticatedAction } from "@/lib/safe-actions"
 import { redirect } from "next/navigation"
+import { revalidatePath } from "next/cache"
 
 /*
 model Posts {
@@ -135,8 +136,75 @@ export const getPosts = async () => {
       },
       author: true,
       likes: true,
+      saved: true
+    },
+
+    orderBy: {
+      createdAt: 'desc'
     }
   })
 
   return posts
 }
+
+export const likePost = authenticatedAction(
+  z.object({
+    postId: z.string()
+  }),
+  async({postId}, {userId}) => {
+    const alreadyLiked = await prisma.like.findFirst({
+      where: {
+        postId,
+        authorId: userId
+      }
+    })
+
+    if(alreadyLiked) {
+      await prisma.like.delete({
+        where: {
+          id: alreadyLiked.id
+        }
+      })
+    } else {
+      await prisma.like.create({
+        data: {
+          postId,
+          authorId: userId
+        }
+      })
+    }
+  
+    revalidatePath('/')
+  }
+)
+
+export const savePost = authenticatedAction(
+  z.object({
+    postId: z.string()
+  }),
+  async({postId}, {userId}) => {
+    const alreadySaved = await prisma.savedPosts.findFirst({
+      where: {
+        postId,
+        userId
+      }
+    })
+
+    if(alreadySaved) {
+      await prisma.savedPosts.delete({
+        where: {
+          id: alreadySaved.id
+        }
+      })
+    } else {
+      await prisma.savedPosts.create({
+        data: {
+          postId,
+          userId
+        }
+      })
+    }
+
+    revalidatePath('/')
+  }
+)
