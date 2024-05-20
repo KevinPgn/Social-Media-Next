@@ -2,6 +2,7 @@
 import prisma from "@/lib/prisma"
 import {z} from "zod"
 import { authenticatedAction } from "@/lib/safe-actions"
+import { redirect } from "next/navigation"
 
 /*
 model Posts {
@@ -102,7 +103,7 @@ export const createPost = authenticatedAction(
     tags: z.array(z.string())
   }),
   async({title, content, image, tags}, {userId}) => {
-    const post = await prisma.posts.create({
+    await prisma.posts.create({
       data: {
         title,
         content,
@@ -120,6 +121,20 @@ export const createPost = authenticatedAction(
         }
       }
     })
-    return post
+    redirect('/')
   }
 )
+
+export const getPosts = async () => {
+  const posts = await prisma.posts.findMany({
+    include: {
+      tags: {
+        include: {
+          tag: true
+        }
+      },
+    }
+  })
+
+  return posts
+}

@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className={"flex min-h-screen px-5 " + inter.className} data-theme='night'>
         <SessionProvider>
           <Sidebar />
-          <section className="flex p-3 w-full">
+          <section className="flex p-3 w-full overflow-y-auto">
             <div className="w-full">
             <div className="flex items-center justify-around">
               <SearchBar />

@@ -7,7 +7,7 @@ export const Links = () => {
   const pathname = usePathname()
   
   return <section className="flex flex-col gap-5">
-    <Link href="#" className={`
+    <Link href="/" className={`
     ${pathname === "/" ? "bg-[#7157F0]" : ""}
     flex text-xl items-center gap-5 hover:bg-[#7157F0] text-white duration-75 p-3 rounded-md`}>
       <Home size={27} />
