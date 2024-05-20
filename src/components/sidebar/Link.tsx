@@ -25,8 +25,8 @@ export const Links = () => {
       <Users size={27} />
       <span>People</span>
     </Link>
-    <Link href="#" className={`
-    ${pathname === "/savedposts" ? "bg-[#7157F0]" : ""}
+    <Link href="/posts/savedpost" className={`
+    ${pathname === "/posts/savedpost" ? "bg-[#7157F0]" : ""}
     flex text-xl items-center gap-5 hover:bg-[#7157F0] text-white duration-75 p-3 rounded-md`}>
       <Bookmark size={27} />
       <span>Saved Posts</span>

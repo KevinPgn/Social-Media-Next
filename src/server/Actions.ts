@@ -208,3 +208,30 @@ export const savePost = authenticatedAction(
     revalidatePath('/')
   }
 )
+
+export const getSavedPosts = authenticatedAction(
+  z.object({}),
+  async({}, {userId}) => {
+    const savedPosts = await prisma.savedPosts.findMany({
+      where: {
+        userId,
+      },
+      select: {
+        post: {
+          include: {
+            tags: {
+              include: {
+                tag: true
+              }
+            },
+            likes: true,
+            author: true,
+            saved: true
+          },
+        },
+        user: true
+      }
+    })
+
+    return savedPosts
+  })
