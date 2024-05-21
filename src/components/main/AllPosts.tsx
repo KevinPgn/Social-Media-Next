@@ -1,11 +1,21 @@
+"use client"
 import { auth } from "@/lib/auth"
 import { BtnBookmark } from "../Button/BtnBookmark"
 import { BtnLike } from "../Button/BtnLike"
 import { SearchEngine } from "./SearchEngine"
+import { useSearchParams } from "next/navigation"
 
-export const AllPosts = async ({posts}: any) => {
-  const session = await auth()
-  const user = session?.user?.id
+export const AllPosts =  ({posts, user}: any) => {
+  const searchParams = useSearchParams()
+  const inputSearch = searchParams.get('inputSearch')
+
+  if(inputSearch) {
+    posts = posts.filter((post: any) => post.title.toLowerCase().includes(inputSearch.toLowerCase()))
+  }
+  if(posts.length === 0) {
+    return <p>nothing found</p>
+  }
+
   return <section className="flex flex-col gap-5">
     <SearchEngine />
     {posts.map((post: any) => (

@@ -13,6 +13,9 @@ export const SearchEngine = () => {
 
     <div className="flex items-center gap-5">
       <span
+      onClick={() => search('all')}
+      className="text-sm text-white p-2 bg-purple-800 rounded-lg w-[70px] text-center cursor-pointer">All</span>
+      <span
       onClick={() => search('users')}
       className="text-sm text-white p-2 bg-purple-800 rounded-lg w-[70px] text-center cursor-pointer">Users</span>
       <span 
