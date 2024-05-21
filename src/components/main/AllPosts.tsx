@@ -1,11 +1,13 @@
 import { auth } from "@/lib/auth"
 import { BtnBookmark } from "../Button/BtnBookmark"
 import { BtnLike } from "../Button/BtnLike"
+import { SearchEngine } from "./SearchEngine"
 
 export const AllPosts = async ({posts}: any) => {
   const session = await auth()
   const user = session?.user?.id
   return <section className="flex flex-col gap-5">
+    <SearchEngine />
     {posts.map((post: any) => (
       <div key={post.id} className="w-full bg-slate-950 p-5 rounded-md">
         <div className="flex items-center gap-3">
