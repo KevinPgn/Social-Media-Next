@@ -1,5 +1,4 @@
 "use client"
-import { auth } from "@/lib/auth"
 import { BtnBookmark } from "../Button/BtnBookmark"
 import { BtnLike } from "../Button/BtnLike"
 import { SearchEngine } from "./SearchEngine"

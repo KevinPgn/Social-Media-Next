@@ -266,3 +266,80 @@ export const getLikedPosts = authenticatedAction(
 
     return likedPosts
   })
+
+//j'ai besoin de récuperer tous les users qui existent
+export const getAllUsers = async () => {
+  const users = await prisma.user.findMany({
+    include: {
+      followers: true,
+      following: true
+    }
+  })
+
+  return users
+}
+
+export const followUser = authenticatedAction(
+  z.object({
+    userId: z.string()
+  }),
+  async({userId}, {userId: followerId}) => {
+    if (userId === followerId) {
+      throw new Error("You cannot follow yourself");
+    }
+
+    const alreadyFollowing = await prisma.followers.findFirst({
+      where: {
+        followerId,
+        followingId: userId
+      }
+    })
+
+    if(alreadyFollowing) {
+      await prisma.followers.delete({
+        where: {
+          id: alreadyFollowing.id
+        }
+      })
+    } else {
+      await prisma.followers.create({
+        data: {
+          followerId,
+          followingId: userId
+        }
+      })
+    }
+
+    revalidatePath('/people')
+  }
+)
+
+export const getFollowers = authenticatedAction(
+  z.object({}),
+  async({}, {userId}) => {
+    const followers = await prisma.followers.findMany({
+      where: {
+        followingId: userId
+      },
+      include: {
+        follower: true,
+      }
+    })
+
+    return followers
+  })
+
+export const getFollowing = authenticatedAction(
+  z.object({}),
+  async({}, {userId}) => {
+    const following = await prisma.followers.findMany({
+      where: {
+        followerId: userId
+      },
+      include: {
+        following: true
+      }
+    })
+
+    return following
+  })

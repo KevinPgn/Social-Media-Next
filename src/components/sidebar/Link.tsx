@@ -19,8 +19,8 @@ export const Links = () => {
       <ImageUp size={27} />
       <span>Create Post</span>
     </Link>
-    <Link href="#" className={`
-    ${pathname === "/users" ? "bg-[#7157F0]" : ""}
+    <Link href="/people" className={`
+    ${pathname === "/people" ? "bg-[#7157F0]" : ""}
     flex text-xl items-center gap-5 hover:bg-[#7157F0] text-white duration-75 p-3 rounded-md`}>
       <Users size={27} />
       <span>People</span>
