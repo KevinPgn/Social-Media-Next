@@ -235,3 +235,34 @@ export const getSavedPosts = authenticatedAction(
 
     return savedPosts
   })
+
+export const getLikedPosts = authenticatedAction(
+  z.object({}),
+  async({}, {userId}) => {
+    const likedPosts = await prisma.like.findMany({
+      where: {
+        authorId: userId
+      },
+      include: {
+        post: {
+          include: {
+            tags: {
+              include: {
+                tag: true
+              }
+            },
+            likes: true,
+            author: true,
+            saved: true,
+          },
+        },
+        author: true
+      },
+
+      orderBy: {
+        createdAt: 'desc'
+      }
+    })
+
+    return likedPosts
+  })

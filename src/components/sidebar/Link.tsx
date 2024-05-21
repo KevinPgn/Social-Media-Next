@@ -31,8 +31,8 @@ export const Links = () => {
       <Bookmark size={27} />
       <span>Saved Posts</span>
     </Link>
-    <Link href="#" className={`
-    ${pathname === "/favorypost" ? "bg-[#7157F0]" : ""}
+    <Link href="/posts/likedpost" className={`
+    ${pathname === "/posts/likedpost" ? "bg-[#7157F0]" : ""}
     flex text-xl items-center gap-5 hover:bg-[#7157F0] text-white duration-75 p-3 rounded-md`}>
       <Heart size={27} />
       <span>Like Posts</span>
